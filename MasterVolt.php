@@ -61,7 +61,7 @@ class MasterVolt
 		$this->writeTimeout = $timeout;
 	}
 
-	public function setCommandRetries($reties = 5)
+	public function setCommandRetries($retries = 5)
 	{
 		$this->commandRetries = $retries;
 	}
