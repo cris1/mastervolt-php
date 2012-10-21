@@ -1,6 +1,6 @@
 <?php
 
-class MasterVolt 
+class MasterVolt
 {
 	const XS3200 = 0xDC;
 	const XS2000 = 0xDB;
@@ -86,16 +86,16 @@ class MasterVolt
 		$command = func_get_args();
 		array_unshift($command, 'C*');
 		$data .= call_user_func_array('pack', $command);
-		
+
 		$data .= chr($this->calcChecksum($data));
 
 		// Flush data from read buffer
 		$flush = fread($this->serial, 1024);
-		if ($this->debug && $flush) {	
+		if ($this->debug && $flush) {
 			echo "< " . bin2hex($flush) . "\n";
 		}
 
-		if ($this->debug) {	
+		if ($this->debug) {
 			echo "> " . bin2hex($data) . "\n";
 		}
 
@@ -142,7 +142,7 @@ class MasterVolt
 
 		$read = substr($read, 0, $retlen);
 
-		if ($this->debug) {	
+		if ($this->debug) {
 			echo "< " . bin2hex($read) . "\n";
 		}
 
@@ -168,11 +168,11 @@ class MasterVolt
 	private function doCommand($command, $retlen)
 	{
 		$tries = 0;
-		while (true) {		
+		while (true) {
 			call_user_func_array(array($this, 'writeCommand'), $command);
 
 			if ($read = $this->readData($retlen)) {
-				
+
 				if ($read[0] == $command[0]) {
 					return $read;
 				}
@@ -207,7 +207,7 @@ class MasterVolt
 			echo "Unknown device type " . dechex($read[1]) . "\n";
 		}
 
-		return false;		
+		return false;
 	}
 
 	public function getDeviceInfo()
