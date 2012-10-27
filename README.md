@@ -17,6 +17,8 @@ If you have such a Mastervolt device, please contact me at casper@langemeijer.eu
 
 This code probably only works on linux machines.
 
+You can read more on this at http://blog.casperlangemeijer.nl/
+
 Usage
 -----
 
