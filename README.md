@@ -6,9 +6,10 @@ PHP class to get data from Mastervolt solar invertors
 It is written by Casper Langemeijer, and subject to the GPL license v3.0.
 
 This work is based on Mastervolt specifications I've found everywhere on the net.
-It currently supports XS3200 and XS2000 (= untested) models, but adding support for other
-Mastervolt devices should be trivial. See further in this document what to do
-if you have some other model and still want to use this class.
+It currently supports the XS3200, XS4300 and XS2000 models (although the last two are
+not tested by me, but adding support for other Mastervolt devices should be trivial. 
+See further in this document what to do if you have some other model and still want to
+use this class.
 
 This class does **not** support mutiple devices on a single RS-485 interface. I've read
 somewhere that bigger mastervolt devices are implemented as two devices in a single box.
@@ -17,7 +18,7 @@ If you have such a Mastervolt device, please contact me at casper@langemeijer.eu
 
 This code probably only works on linux machines.
 
-You can read more on this at http://blog.casperlangemeijer.nl/
+You can read more on this at http://blog.casperlangemeijer.nl/search/label/mastervolt
 
 Usage
 -----
