@@ -12,10 +12,13 @@ class MasterVolt
 		self::XS2000 => 'XS2000',
 	);
 
+	private $debug = false;
+	private $device = false;
+	private $initialized = false;
+
 	private $serial;
 	private $identifier = 0;
 
-	private $debug = false;
 	private $readTimeout = 3;
 	private $writeTimeout = 1;
 	private $commandRetries = 5;
@@ -23,6 +26,14 @@ class MasterVolt
 	public function __construct($device, $debug = false)
 	{
 		$this->debug = $debug;
+		$this->device = $device;
+	}
+
+	public function initialize()
+	{
+		if ($this->initialized) {
+			return;
+		}
 
 		exec('stty --version', $output, $return_var);
 
@@ -31,9 +42,9 @@ class MasterVolt
 			exit;
 		}
 
-		`stty -F $device 9600 -parenb cs8 -cstopb clocal -crtscts -ixon -ixoff -hupcl ignbrk -icrnl -opost -onlcr -isig -icanon -iexten -echo -echoe -echok -echoctl -echoke`;
+		`stty -F $this->device 9600 -parenb cs8 -cstopb clocal -crtscts -ixon -ixoff -hupcl ignbrk -icrnl -opost -onlcr -isig -icanon -iexten -echo -echoe -echok -echoctl -echoke`;
 
-		if (!$this->serial = fopen($device, 'r+b')) {
+		if (!$this->serial = fopen($this->device, 'r+b')) {
 			echo "Could not open serial port\n";
 			exit;
 		}
@@ -51,6 +62,8 @@ class MasterVolt
 		if ($this->debug) {
 			echo "MasterVolt Device " . $this->types[$type] . " found\n";
 		}
+
+		$this->initialized = true;
 	}
 
 	public function setReadTimeout($timeout = 3)
@@ -214,6 +227,8 @@ class MasterVolt
 
 	public function getDeviceInfo()
 	{
+		$this->initialize();
+
 		if (!$read = $this->doCommand(array(0xB4, 0x00, 0x00, 0x00), 26)) {
 			return false;
 		}
@@ -230,6 +245,8 @@ class MasterVolt
 
 	public function getDayTotal($day)
 	{
+		$this->initialize();
+
 		if (!$read = $this->doCommand(array(0x9A, $day, 0x00, 0x00), 4)) {
 			return false;
 		}
@@ -242,6 +259,8 @@ class MasterVolt
 
 	public function getCurrentStatus()
 	{
+		$this->initialize();
+
 		if (!$read = $this->doCommand(array(0xB6, 0x00, 0x00, 0x00), 26)) {
 			return false;
 		}
