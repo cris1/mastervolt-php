@@ -29,7 +29,7 @@ class MasterVolt
 		$this->device = $device;
 	}
 
-	public function initialize()
+	private function initialize($discover = true)
 	{
 		if ($this->initialized) {
 			return;
@@ -50,17 +50,19 @@ class MasterVolt
 		}
 		stream_set_blocking($this->serial, 0);
 
-		$type = $this->discover();
+		if ($discover) {
+			$type = $this->discover();
 
-		if (!$type) {
-			if (!$this->debug) {
-				echo "Unknown device or no device at all\nRun debug mode for more information\n";
+			if (!$type) {
+				if (!$this->debug) {
+					echo "Unknown device or no device at all\nRun debug mode for more information\n";
+				}
+				exit;
 			}
-			exit;
-		}
 
-		if ($this->debug) {
-			echo "MasterVolt Device " . $this->types[$type] . " found\n";
+			if ($this->debug) {
+				echo "MasterVolt Device " . $this->types[$type] . " found\n";
+			}
 		}
 
 		$this->initialized = true;
