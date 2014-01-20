@@ -29,7 +29,7 @@ class MasterVolt
 			exit;
 		}
 
-		`stty -F $device 9600 -parenb cs8 -cstopb clocal -crtscts -ixon -ixoff`;
+		`stty -F $device 9600 -parenb cs8 -cstopb clocal -crtscts -ixon -ixoff -hupcl ignbrk -icrnl -opost -onlcr -isig -icanon -iexten -echo -echoe -echok -echoctl -echoke`;
 
 		if (!$this->serial = fopen($device, 'r+b')) {
 			echo "Could not open serial port\n";
