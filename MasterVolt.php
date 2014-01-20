@@ -243,9 +243,11 @@ class MasterVolt
 			while (isset($read[$ms])) {
 				$ms++;
 			}
-			$read[$ms] = fread($this->serial, 1024);
 
-			echo "< " . $ms . 'ms '. bin2hex($read) . "\n";
+			if ($str = fread($this->serial, 1024)) {
+				$read[$ms] = $str;
+				echo "< " . $ms . 'ms '. bin2hex($str) . "\n";
+			}
 
 			usleep(100);
 
