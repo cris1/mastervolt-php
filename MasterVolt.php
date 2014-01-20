@@ -2,10 +2,12 @@
 
 class MasterVolt
 {
+	const XS4300 = 0xFF;
 	const XS3200 = 0xDC;
 	const XS2000 = 0xDB;
 
 	private $types = array(
+		self::XS4300 => 'XS4300',
 		self::XS3200 => 'XS3200',
 		self::XS2000 => 'XS2000',
 	);
