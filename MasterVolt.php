@@ -20,6 +20,7 @@ class MasterVolt
 	private $identifier = 0;
 
 	private $readTimeout = 3;
+	private $discoveryTimeout = 10;
 	private $writeTimeout = 1;
 	private $commandRetries = 5;
 
@@ -226,6 +227,36 @@ class MasterVolt
 
 		return false;
 	}
+
+	public function discoverMulti()
+	{
+		$this->initialize(/* $discover = */ false);
+
+		if (!$this->writeCommand(0xC1, 0x00, 0x00, 0x00)) {
+			return false;
+		}
+
+		$read = array();
+		$time = microtime(true);
+		while (true) {
+			$ms = (microtime(true) - $time) * 1000;
+			while (isset($read[$ms])) {
+				$ms++;
+			}
+			$read[$ms] = fread($this->serial, 1024);
+
+			echo "< " . $ms . 'ms '. bin2hex($read) . "\n";
+
+			usleep(100);
+
+			if (microtime(true) > $time + $this->discoveryTimeout) {
+				break;
+			}
+		}
+
+		return true;
+	}
+
 
 	public function getDeviceInfo()
 	{
