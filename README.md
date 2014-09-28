@@ -11,7 +11,7 @@ not tested by me, but adding support for other Mastervolt devices should be triv
 See further in this document what to do if you have some other model and still want to
 use this class.
 
-This class does **not** support mutiple devices on a single RS-485 interface. I've read
+This class does **not** support multiple devices on a single RS-485 interface. I've read
 somewhere that bigger mastervolt devices are implemented as two devices in a single box.
 As such, they are not supported. I want to implement this, but I have no way to test it.
 If you have such a Mastervolt device, please contact me at casper@langemeijer.eu
@@ -50,7 +50,7 @@ three methods to query data:
 
 For more information on these methods see below.
 
-This class is ment to be very reliable, as I've discovered the RS-485 serial wire protocol
+This class is meant to be very reliable, as I've discovered the RS-485 serial wire protocol
 regularly loses data. For that reason it automatically retries commands, if and incorrect
 response is received, or the device does not reply to our commands.
 
