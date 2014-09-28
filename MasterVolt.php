@@ -254,7 +254,7 @@ class MasterVolt
 			'netVac'	=> $read[10] + $read[11]*256,
 			'netA'		=> ($read[12] + $read[13]*256)/100,
 			'netW'		=> $read[14] + $read[15]*256,
-			'kWh'		=> ($read[16] + $read[17]*256)/100,
+			'kWh'		=> ($read[16] + $read[17]*256 + $read[18]*65536)/100,
 			'C'			=> $read[19],
 			'h'			=> ($read[20] + $read[21]*256 + $read[22]*65536 + $read[23]*16777216 + $read[24]*4294967296 + $read[25]*4294967296*256)/60,
 		);
