@@ -31,7 +31,18 @@ class MasterVolt
 			exit;
 		}
 
-		`stty -F $device 9600 -parenb cs8 -cstopb clocal -crtscts -ixon -ixoff -hupcl ignbrk -icrnl -opost -onlcr -isig -icanon -iexten -echo -echoe -echok -echoctl -echoke`;
+		$settings = "9600 -parenb cs8 -cstopb clocal -crtscts -ixon -ixoff -hupcl ignbrk -icrnl -opost -onlcr -isig -icanon -iexten -echo -echoe -echok -echoctl -echoke";
+		$stty = "stty -F " . escapeshellarg($device);
+		$cmd = $stty . " " . $settings;
+
+		if ($debug) {
+			echo "Commandline for stty\n$ ";
+			echo $cmd . "\n";
+		}
+		`$cmd`;
+		if ($debug) {
+			echo "\nCurrent stty settings:\n" .  `$stty -a` . "\n";
+		}
 
 		if (!$this->serial = fopen($device, 'r+b')) {
 			echo "Could not open serial port\n";
